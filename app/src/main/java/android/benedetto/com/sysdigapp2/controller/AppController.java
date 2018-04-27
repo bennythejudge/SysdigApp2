@@ -2,6 +2,7 @@ package android.benedetto.com.sysdigapp2.controller;
 
 import android.app.Application;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +35,7 @@ public class AppController extends Application {
         getRequestQueue().add(req);
     }
     public <T> void addToRequestQueue(Request<T> req) {
+        Log.d("addToRequestQueue", "inside here with req: " + req.toString());
         getRequestQueue().add(req);
     }
 
