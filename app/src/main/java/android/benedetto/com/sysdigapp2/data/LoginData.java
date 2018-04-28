@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -34,7 +35,10 @@ public class LoginData {
             final String password,
             final LoginAsyncResponse callBack) throws RuntimeException {
         String url =
-                "https://app.sysdigcloug.com/api/login";
+                "https://app.sysdigcloud.com/api/login";
+
+        Log.d("doLogin", "start: user: " + user + " pwd: " + password);
+
 
         // singleton only use one instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
@@ -56,6 +60,7 @@ public class LoginData {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
 
                 // only when the HTTP call is done, we call the callback method
@@ -67,10 +72,29 @@ public class LoginData {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("onErrorResponse","error: " + error);
+//                throw new RuntimeException("OnError response error: " + error);
                 // handle errors
             }
-        });
-
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("X-Sysdig-Product", "SDC");
+                    Log.d("getHeaders", "headers: " + headers);
+                    return headers;
+            }
+            @Override
+            protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("username", user);
+                    params.put("password", password);
+                    Log.d("getParams", "user: " + user + " pwd: " + password);
+                    return params;
+            }
+        };
 
         if (jsonArrayRequest == null) {
             throw new RuntimeException("EXCEPTION!!");
@@ -80,33 +104,15 @@ public class LoginData {
 
         AppController instance = AppController.getInstance();
 
-        // questa instance e' null - come mai??? <<<<<<<< RICOMINCIA DA QUI!!!
-
-
-        Log.d("QUIQUIQUI", "instance: " + instance.toString());
+        // questa instance e' null - come mai??? <<<<<<<< RICOMINCIA DA QUI!
+        // perche' la variabile mInstance non era stata valorizzata nell'AppController
         if (instance == null) {
             throw new RuntimeException("appcontroller instance is null!!");
         }
 
-        AppController.getInstance().addToRequestQueue(jsonArrayRequest);
+        Log.d("QUIQUIQUI", "instance: " + instance.toString());
+        instance.addToRequestQueue(jsonArrayRequest);
     }
 }
 
 
-//
-//        {
-//@Override
-//public Map<String, String> getHeaders() {
-//        HashMap<String, String> headers = new HashMap<String, String>();
-//        headers.put("Content-Type", "application/json");
-//        headers.put("X-Sysdig-Product", "SDC");
-//        return headers;
-//        }
-//@Override
-//protected Map<String, String> getParams() {
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put("User", user);
-//        params.put("Pass", password);
-//        return params;
-//        }
-//        }

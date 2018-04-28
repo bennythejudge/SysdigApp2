@@ -19,6 +19,10 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // because this was missing you were getting a crash
+        // and it makes sense:
+        mInstance = this;
     }
 
     public RequestQueue getRequestQueue() {

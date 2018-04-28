@@ -30,9 +30,14 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT)
                         .show();
                 // call for the HTTP call
+                String u = "benedetto.logiudice@sysdig.com";
+                String p = "kUC#ohrd6V&#86pocpNZ2#PYfZZjvYe3eihiriWz3(&";
+//                new LoginData().doLogin(
+//                        user.getText().toString(),
+//                        password.getText().toString(),
                 new LoginData().doLogin(
-                        user.getText().toString(),
-                        password.getText().toString(),
+                        u,
+                        p,
                         new LoginAsyncResponse() {
                     @Override
                     public void loginFinished(String sessionData) {
