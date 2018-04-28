@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 //                        user.getText().toString(),
 //                        password.getText().toString(),
                 new LoginData().doLogin(
-                        u,
-                        p,
+                        user.getText().toString(),
+                        password.getText().toString(),
                         new LoginAsyncResponse() {
                     @Override
                     public void loginFinished(String sessionData) {
