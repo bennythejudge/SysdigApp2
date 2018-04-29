@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyLog;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        VolleyLog.DEBUG = true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

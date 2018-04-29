@@ -11,9 +11,12 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,49 +38,44 @@ public class LoginData {
             final String password,
             final LoginAsyncResponse callBack) throws RuntimeException {
         String url =
-                "https://app.sysdigcloud.com/api/login";
+                "https://app-staging2.sysdigcloud.com/api/login";
 
         Log.d("doLogin", "start: user: " + user + " pwd: " + password);
 
 
         // singleton only use one instance
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-                url, new Response.Listener<JSONArray>() {
+
+        // we try to send the login data here
+        HashMap<String,String> params = new HashMap<String,String>();
+        params.put("username", user);
+        params.put("password", password);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,
+                url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
-                JSONObject quoteObj = null;
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        quoteObj = response.getJSONObject(i);
-//                        Quote quote = new Quote();
-//                        quote.setQuote(quoteObj.getString("quote"));
-//                        quote.setAuthor(quoteObj.getString("name"));
-//
-//                        Log.d("getQuote", quoteObj.getString("name"));
-//
-//                        quoteArrayList.add(quote);
+            public void onResponse(JSONObject response) {
+                Log.d("onResponse", "response: " + response.toString());
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                // only when the HTTP call is done, we call the callback method
-                // HERE YOU SHOULD PASS THE SESSION DATA OBTAINED FROM THE LOGIN CALL
-                // HOW DO YOU DO THAT?
-                if (null != callBack) callBack.loginFinished(quoteObj.toString());
-
+//                // only when the HTTP call is done, we call the callback method
+//                // HERE YOU SHOULD PASS THE SESSION DATA OBTAINED FROM THE LOGIN CALL
+//                // HOW DO YOU DO THAT?
+//                if (null != callBack) callBack.loginFinished(response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("onErrorResponse", "Error: " + error.getMessage());
                 Log.d("onErrorResponse","error: " + error);
-//                throw new RuntimeException("OnError response error: " + error);
-                // handle errors
             }
-        })
-        {
+        }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("username", user);
+//                params.put("password", password);
+//                Log.d("getParams", "user: " + user + " pwd: " + password);
+//                return params;
+//            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
@@ -86,21 +84,13 @@ public class LoginData {
                     Log.d("getHeaders", "headers: " + headers);
                     return headers;
             }
-            @Override
-            protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("username", user);
-                    params.put("password", password);
-                    Log.d("getParams", "user: " + user + " pwd: " + password);
-                    return params;
-            }
         };
 
-        if (jsonArrayRequest == null) {
+        if (req == null) {
             throw new RuntimeException("EXCEPTION!!");
         }
 
-        Log.d("QUIQUIQUI", "jsonArrayRequest: " + jsonArrayRequest.toString());
+        Log.d("QUIQUIQUI", "jsonArrayRequest: " + req.toString());
 
         AppController instance = AppController.getInstance();
 
@@ -111,7 +101,7 @@ public class LoginData {
         }
 
         Log.d("QUIQUIQUI", "instance: " + instance.toString());
-        instance.addToRequestQueue(jsonArrayRequest);
+        instance.addToRequestQueue(req);
     }
 }
 
