@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class LoginData {
             final String user,
             final String password,
             final LoginAsyncResponse callBack) throws RuntimeException {
+        VolleyLog.DEBUG = true;
         String url =
                 "https://app-staging2.sysdigcloud.com/api/login";
 
@@ -49,8 +51,6 @@ public class LoginData {
         HashMap<String,String> params = new HashMap<String,String>();
         params.put("username", user);
         params.put("password", password);
-
-
 
         Log.d("doLogin", "params");
         Log.d("doLogin", "params" + params.toString());
@@ -70,8 +70,9 @@ public class LoginData {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("onErrorResponse", "Error: " + error.getMessage());
+                VolleyLog.d("onErrorResponse", "Error: " + error.toString());
                 Log.d("onErrorResponse","error: " + error);
+                Log.d("onErrorResponse", error.networkResponse.allHeaders.toString());
             }
         }) {
 //            @Override
