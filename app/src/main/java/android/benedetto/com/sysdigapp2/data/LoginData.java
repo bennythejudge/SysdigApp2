@@ -50,6 +50,12 @@ public class LoginData {
         params.put("username", user);
         params.put("password", password);
 
+
+
+        Log.d("doLogin", "params");
+        Log.d("doLogin", "params" + params.toString());
+
+
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,
                 url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
