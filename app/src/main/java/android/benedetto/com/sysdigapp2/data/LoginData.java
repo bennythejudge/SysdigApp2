@@ -23,6 +23,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,10 +66,20 @@ public class LoginData {
             public void onResponse(JSONObject response) {
                 Log.d("onResponse", "response: " + response.toString());
 
+
+                // CookieStore is just an interface, you can implement it and do things like
+// save the cookies to disk or what ever.
+                CookieManager manager = new CookieManager();
+                CookieHandler.setDefault( manager  );
+
+                Log.d("onResponse", "cookiemanager: " + manager.toString());
+
+
+
 //                // only when the HTTP call is done, we call the callback method
 //                // HERE YOU SHOULD PASS THE SESSION DATA OBTAINED FROM THE LOGIN CALL
 //                // HOW DO YOU DO THAT?
-//                if (null != callBack) callBack.loginFinished(response.toString());
+                if (null != callBack) callBack.loginFinished(response.toString());
             }
         }, new Response.ErrorListener() {
             @Override

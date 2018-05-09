@@ -12,6 +12,8 @@ public class AppController extends Application {
     public static final String TAG = AppController.class.getSimpleName();
     private static AppController mInstance;
     private RequestQueue mRequestQueue;
+//    private DefaultHttpClient mHttpClient;
+
 
     // devo capire meglio questa
     public static synchronized AppController getInstance() { return mInstance; }
@@ -24,9 +26,9 @@ public class AppController extends Application {
         // and it makes sense:
         mInstance = this;
     }
-
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
+
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
         return mRequestQueue;
