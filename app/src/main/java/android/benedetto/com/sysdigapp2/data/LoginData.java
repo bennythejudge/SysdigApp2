@@ -56,7 +56,7 @@ public class LoginData {
         Log.d("doLogin", "params" + params.toString());
 
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
                 url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -75,6 +75,7 @@ public class LoginData {
                 Log.d("onErrorResponse", error.networkResponse.allHeaders.toString());
             }
         }) {
+            // why isn't this working? Lord, help me!
 //            @Override
 //            protected Map<String, String> getParams() {
 //                Map<String, String> params = new HashMap<String, String>();
