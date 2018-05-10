@@ -27,7 +27,6 @@ public class DisplayMessageActivity extends AppCompatActivity{
 
         Log.d("DisplayMessageActivity", "sessionData: " + sessionData.toString());
 
-
         try {
             obj = new JSONObject(sessionData);
             Log.d("DisplayMessageActivity", "id: " + obj.get("id"));

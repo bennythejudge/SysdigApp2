@@ -67,18 +67,9 @@ public class LoginData {
                 Log.d("onResponse", "response: " + response.toString());
 
 
-                // CookieStore is just an interface, you can implement it and do things like
-// save the cookies to disk or what ever.
-                CookieManager manager = new CookieManager();
-                CookieHandler.setDefault( manager  );
-
-                Log.d("onResponse", "cookiemanager: " + manager.toString());
-
-
-
-//                // only when the HTTP call is done, we call the callback method
-//                // HERE YOU SHOULD PASS THE SESSION DATA OBTAINED FROM THE LOGIN CALL
-//                // HOW DO YOU DO THAT?
+                // only when the HTTP call is done, we call the callback method
+                // HERE YOU SHOULD PASS THE SESSION DATA OBTAINED FROM THE LOGIN CALL
+                // HOW DO YOU DO THAT?
                 if (null != callBack) callBack.loginFinished(response.toString());
             }
         }, new Response.ErrorListener() {
@@ -89,15 +80,6 @@ public class LoginData {
                 Log.d("onErrorResponse", error.networkResponse.allHeaders.toString());
             }
         }) {
-            // why isn't this working? Lord, help me!
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("username", user);
-//                params.put("password", password);
-//                Log.d("getParams", "user: " + user + " pwd: " + password);
-//                return params;
-//            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();

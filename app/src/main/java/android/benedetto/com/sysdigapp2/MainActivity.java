@@ -34,18 +34,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TextView user = findViewById(R.id.user);
                 TextView password = findViewById(R.id.password);
-                CookieHandler.setDefault(new CookieManager());
-
-//                Toast.makeText(
-//                        MainActivity.this,
-//                        "Button pressed\nuser: " + user.getText() +
-//                                "\npwd: " + password.getText(),
-//                        Toast.LENGTH_SHORT)
-//                        .show();
-                // call for the HTTP call
-//                new LoginData().doLogin(
-//                        user.getText().toString(),
-//                        password.getText().toString(),
                 new LoginData().doLogin(
                         user.getText().toString(),
                         password.getText().toString(),
@@ -55,11 +43,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("loginFinished", "inside main activity with sessionData: " + sessionData);
 
 
-
                         Toast.makeText(MainActivity.this, "after HTTP call is completed",
                                 Toast.LENGTH_SHORT).show();
-
-
 
                         Intent intent = new Intent(getApplicationContext(), DisplayMessageActivity.class);
                         intent.putExtra(EXTRA_MESSAGE, sessionData);
