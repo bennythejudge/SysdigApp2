@@ -32,8 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginData {
-    String mUser;
     String mPassword;
+    String mUser;
 
     public void LoginData() {
     }

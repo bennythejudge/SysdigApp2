@@ -1,5 +1,7 @@
 package android.benedetto.com.sysdigapp2;
 
+import android.benedetto.com.sysdigapp2.data.EventsAsyncResponse;
+import android.benedetto.com.sysdigapp2.data.EventsData;
 import android.benedetto.com.sysdigapp2.data.LoginAsyncResponse;
 import android.benedetto.com.sysdigapp2.data.LoginData;
 import android.content.Intent;
@@ -41,10 +43,19 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void loginFinished(String sessionData) {
                         Log.d("loginFinished", "inside main activity with sessionData: " + sessionData);
-
-
-                        Toast.makeText(MainActivity.this, "after HTTP call is completed",
+                        Toast.makeText(MainActivity.this, "login completed",
                                 Toast.LENGTH_SHORT).show();
+
+                        // here make the second call
+                        new EventsData().fetchEvents(
+                                new EventsAsyncResponse() {
+                                    @Override
+                                    public void fetchEventsFinished(String sessionData) {
+                                        Log.d("EventsAsyncResponse", "here is am with: " + sessionData.toString());
+                                    }
+                                }
+                        );
+
 
                         Intent intent = new Intent(getApplicationContext(), DisplayMessageActivity.class);
                         intent.putExtra(EXTRA_MESSAGE, sessionData);
