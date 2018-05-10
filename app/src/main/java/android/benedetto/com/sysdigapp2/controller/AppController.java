@@ -1,6 +1,8 @@
 package android.benedetto.com.sysdigapp2.controller;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -13,10 +15,20 @@ public class AppController extends Application {
     private static AppController mInstance;
     private RequestQueue mRequestQueue;
 //    private DefaultHttpClient mHttpClient;
+    private static final String SET_COOKIE_KEY = "Set-Cookie";
+    private static final String COOKIE_KEY = "Cookie";
+    private static final String SESSION_COOKIE = "sessionid";
+    private RequestQueue _requestQueue;
+    private SharedPreferences _preferences;
+
+
 
 
     // devo capire meglio questa
     public static synchronized AppController getInstance() { return mInstance; }
+    // a duplicate I know
+    public static synchronized AppController get() { return mInstance; }
+
 
     @Override
     public void onCreate() {
@@ -25,7 +37,12 @@ public class AppController extends Application {
         // because this was missing you were getting a crash
         // and it makes sense:
         mInstance = this;
+
+        // for the cookies
+        _preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        _requestQueue = Volley.newRequestQueue(this);
     }
+
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
 
@@ -50,4 +67,11 @@ public class AppController extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
+    // for the cookie storing problem
+
+
+
+
+
 }
