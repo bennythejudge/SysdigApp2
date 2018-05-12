@@ -40,8 +40,6 @@ public class EventsData {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("eventsonresponse", "response: " + response.toString());
-
-
                 if (null != callBack) callBack.fetchEventsFinished(response.toString());
             }
         }, new Response.ErrorListener() {
