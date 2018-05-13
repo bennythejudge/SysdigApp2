@@ -1,6 +1,7 @@
 package android.benedetto.com.sysdigapp2.controller;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -10,10 +11,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+
+
 public class AppController extends Application {
     public static final String TAG = AppController.class.getSimpleName();
     private static AppController mInstance;
     private RequestQueue mRequestQueue;
+    private Context objContext;
 
     // devo capire meglio questa
     public static synchronized AppController getInstance() { return mInstance; }
@@ -21,6 +28,9 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        CookieManager cmrCookieMan = new CookieManager(new MyCookieStore(this.objContext), CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cmrCookieMan);
 
         // because this was missing you were getting a crash
         // and it makes sense:
