@@ -29,8 +29,13 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Log.d("onCreate", "before I call for cookies");
+
         CookieManager cmrCookieMan = new CookieManager(new MyCookieStore(this.objContext), CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cmrCookieMan);
+
+        Log.d("onCreate", "after the damn cookie calls");
+
 
         // because this was missing you were getting a crash
         // and it makes sense:
