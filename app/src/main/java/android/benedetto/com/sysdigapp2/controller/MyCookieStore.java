@@ -2,6 +2,7 @@ package android.benedetto.com.sysdigapp2.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.net.CookieStore;
 import java.net.HttpCookie;
@@ -36,8 +37,7 @@ class MyCookieStore implements CookieStore {
      */
     public void add(URI uri, HttpCookie cookie) {
 
-        System.out.println("add");
-        System.out.println(cookie.toString());
+        Log.d("add", "cookiestore add cookie: " + cookie.toString());
 
         List<HttpCookie> cookies = mapCookies.get(uri);
         if (cookies == null) {
@@ -61,6 +61,8 @@ class MyCookieStore implements CookieStore {
      */
     @SuppressWarnings("unchecked")
     public MyCookieStore(Context ctxContext) {
+
+        Log.d("MyCookieStore", "inside MyCookieStore");
 
         spePreferences = ctxContext.getSharedPreferences("CookiePrefsFile", 0);
         Map<String, ?> prefsMap = spePreferences.getAll();

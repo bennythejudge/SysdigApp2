@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                                 new EventsAsyncResponse() {
                                     @Override
                                     public void fetchEventsFinished(String sessionData) {
-                                        Log.d("EventsAsyncResponse", "here is am with: " + sessionData.toString());
+                                        Log.d("EventsAsyncResponse", "here I am with: " + sessionData.toString());
                                     }
                                 }
                         );
