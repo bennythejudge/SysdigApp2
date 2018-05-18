@@ -31,10 +31,6 @@ public class AppController extends Application {
 
         Log.d("onCreate", "before I call for cookies");
 
-//        if (this.objContext == null) {
-//            Log.d("onCreate", "I found that this.objContext wss null!");
-//            throw new RuntimeException("EXCEPTION when creating cookiemanager - this.objContext is null !!");
-//        }
         if (getApplicationContext().getApplicationContext() == null) {
             Log.d("onCreate", "I found that this.objContext wss null!");
             throw new RuntimeException("EXCEPTION when creating cookiemanager - this.objContext is null !!");
